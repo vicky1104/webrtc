@@ -1,20 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import React from "react";
+import NavigationView from "./App/Routes/NavigationView";
+import AuthSocket from "./App/Socket/Socket";
+import { SocketContext, socket } from "./App/Context/Socket";
+import SocketEvents from "./App/Socket/SocketEvents";
+import Permissions from "./App/Permissions";
 
-export default function App() {
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SocketContext.Provider value={socket}>
+      {/* <Permissions /> */}
+      <AuthSocket>
+        <NavigationContainer>
+          <SocketEvents>
+            <NavigationView />
+          </SocketEvents>
+        </NavigationContainer>
+      </AuthSocket>
+    </SocketContext.Provider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
